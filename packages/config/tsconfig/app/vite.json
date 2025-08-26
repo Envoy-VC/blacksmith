@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+    "sourceMap": true,
+    "target": "ESNext",
+    "useDefineForClassFields": true
+  },
+  "display": "Vite App",
+  "extends": "../base.json"
+}
