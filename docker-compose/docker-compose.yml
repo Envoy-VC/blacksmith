@@ -1,0 +1,5 @@
+# docker-compose.yml
+include:
+  - path: ./anvil/anvil.yml
+  - path: ./blockscout/blockscout.yml
+    profile: ["blockscout"]

@@ -1,0 +1,20 @@
+version: '3.9'
+
+services:
+  anvil:
+    image: ghcr.io/foundry-rs/foundry:latest
+    container_name: anvil
+    command: >
+      anvil --host 0.0.0.0
+            --port 8545
+            --chain-id 31337
+            --block-time 1
+            --silent
+    ports:
+      - "8545:8545"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8545"]
+      interval: 3s
+      timeout: 2s
+      retries: 10
+    restart: unless-stopped

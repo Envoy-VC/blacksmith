@@ -2,16 +2,19 @@ version: '3.9'
 
 services:
   redis-db:
+    profiles: ["blockscout"]
     extends:
       file: ./services/redis.yml
       service: redis-db
 
   db-init:
+    profiles: ["blockscout"]
     extends:
       file: ./services/db.yml
       service: db-init
 
   db:
+    profiles: ["blockscout"]
     depends_on:
       db-init:
         condition: service_completed_successfully
@@ -20,6 +23,7 @@ services:
       service: db
 
   backend:
+    profiles: ["blockscout"]
     depends_on:
       - db
       - redis-db
@@ -36,16 +40,19 @@ services:
         CHAIN_ID: '31337'
 
   visualizer:
+    profiles: ["blockscout"]
     extends:
       file: ./services/visualizer.yml
       service: visualizer
 
   sig-provider:
+    profiles: ["blockscout"]
     extends:
       file: ./services/sig-provider.yml
       service: sig-provider
 
   frontend:
+    profiles: ["blockscout"]
     depends_on:
       - backend
     extends:
@@ -56,11 +63,13 @@ services:
       NEXT_PUBLIC_NETWORK_RPC_URL: http://host.docker.internal:8545/
 
   stats-db-init:
+    profiles: ["blockscout"]
     extends:
       file: ./services/stats.yml
       service: stats-db-init
 
   stats-db:
+    profiles: ["blockscout"]
     depends_on:
       stats-db-init:
         condition: service_completed_successfully
@@ -69,6 +78,7 @@ services:
       service: stats-db
 
   stats:
+    profiles: ["blockscout"]
     depends_on:
       - stats-db
       - backend
@@ -77,6 +87,7 @@ services:
       service: stats
 
   user-ops-indexer:
+    profiles: ["blockscout"]
     depends_on:
       - db
       - backend
@@ -85,6 +96,7 @@ services:
       service: user-ops-indexer
 
   proxy:
+    profiles: ["blockscout"]
     depends_on:
       - backend
       - frontend
