@@ -13,8 +13,9 @@
     "./tsconfig/app/node": "./tsconfig/app/node.json",
     "./tsconfig/app/vite": "./tsconfig/app/vite.json",
     "./tsconfig/library": "./tsconfig/library/base.json",
-    "./tsconfig/library/base": "./tsconfig/library/base.json",
-    "./tsconfig/library/browser": "./tsconfig/library/browser.json"
+    "./tsconfig/library/base": "./tsconfig/library/node.json",
+    "./tsconfig/library/browser": "./tsconfig/library/browser.json",
+    "./tsconfig/library/node": "./tsconfig/library/base.json"
   },
   "files": ["./biome", "./tsconfig"],
   "license": "MIT",
