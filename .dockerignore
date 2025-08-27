@@ -1,0 +1,76 @@
+# ---- Rust build artifacts ----
+target/
+**/target/
+**/*.rlib
+**/*.rmeta
+
+# ---- Dependencies (reproducible via Cargo.lock) ----
+**/Cargo.lock
+!Cargo.lock
+
+# ---- Logs ----
+*.log
+**/*.log
+
+# ---- Temporary files ----
+*.tmp
+*.swp
+*.swo
+*.bak
+*.old
+
+# ---- OS-specific junk ----
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# ---- Git ----
+.git
+.gitignore
+.gitattributes
+
+# ---- Docker ----
+.dockerignore
+
+# ---- Editors / IDEs ----
+.vscode/
+.idea/
+*.iml
+
+# ---- Env / secrets (DO NOT bake into Docker image) ----
+.env
+**/.env
+*.env.*
+!example.env        # allow example envs for reference
+
+# ---- Tests / fixtures (optional if not needed in container) ----
+tests/
+**/tests/
+fixtures/
+examples/
+
+# ---- CI/CD configs (not needed inside image) ----
+.github/
+.gitlab/
+.circleci/
+
+# ---- Docs ----
+docs/
+*.md
+*.rst
+
+# ---- Cache ----
+.cache/
+**/.cache/
+
+# ---- Node / Frontend junk (if present in monorepo) ----
+node_modules/
+npm-debug.log
+yarn-error.log
+dist/
+build/
+
+# ---- Python virtualenvs (if present) ----
+.venv/
+__pycache__/
+*.pyc
