@@ -31,7 +31,8 @@ pub async fn create2_deploy(
 
     let request = TransactionRequest::default()
         .with_to(deterministic_deployer)
-        .with_input(calldata);
+        .with_input(calldata)
+        .with_gas_limit(15_000_000);
 
     let deploy_tx = provider
         .send_transaction(request)

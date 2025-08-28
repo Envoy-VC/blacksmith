@@ -13,7 +13,8 @@ dotenvy = { workspace = true }
 anyhow = { workspace = true }
 thiserror = { workspace = true }
 common = { path = "../common" }
-rand = "0.9"
+serde_json = {workspace = true}
+serde = { workspace = true }
 
 [lints]
 workspace = true

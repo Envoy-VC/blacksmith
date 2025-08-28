@@ -1,7 +1,7 @@
 use alloy::{providers::ProviderBuilder, signers::local::PrivateKeySigner};
 use anyhow::{Context, Result};
 
-use crate::handlers::uniswap_v2::deploy_uniswap_v2;
+use crate::handlers::uniswap::{deploy_uniswap_v2, deploy_uniswap_v3};
 
 use common::{
     config::Config,
@@ -31,8 +31,35 @@ async fn main() -> Result<()> {
     let shared_state = SharedState::new(state);
 
     // Deploy Uniswap V2
-    deploy_uniswap_v2(shared_state)
+    let uniswap_v2 = deploy_uniswap_v2(shared_state.clone())
         .await
         .context("Failed to deploy Uniswap V2")?;
+
+    let uniswap_v3 = deploy_uniswap_v3(shared_state.clone(), uniswap_v2.weth_address)
+        .await
+        .context("Failed to deploy Uniswap V3")?;
+
+    println!("Uniswap V2 Factory: {:?}", uniswap_v2.factory_address);
+    println!("Uniswap V2 Router: {:?}", uniswap_v2.router_address);
+    println!("Uniswap V2 WETH: {:?}", uniswap_v2.weth_address);
+    println!("\n\n");
+
+    println!("Uniswap V3 Factory: {:?}", uniswap_v3.factory_address);
+    println!(
+        "Uniswap V3 Swap Router: {:?}",
+        uniswap_v3.swap_router_address
+    );
+    println!(
+        "Uniswap V3 NFT Descriptor: {:?}",
+        uniswap_v3.nft_descriptor_address
+    );
+    println!(
+        "Uniswap V3 Position Descriptor: {:?}",
+        uniswap_v3.position_descriptor_address
+    );
+    println!(
+        "Uniswap V3 Position Manager: {:?}",
+        uniswap_v3.position_manager_address
+    );
     Ok(())
 }

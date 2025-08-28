@@ -1,4 +1,9 @@
-use alloy::{hex, primitives::Address};
+use rand::RngCore;
+
+use alloy::{
+    hex,
+    primitives::{keccak256, Address, FixedBytes},
+};
 
 pub fn link_libraries(
     mut bytecode: String,
@@ -39,4 +44,15 @@ pub fn link_libraries(
     }
 
     Ok(format!("0x{}", bytecode))
+}
+
+pub fn get_salt(contract_name: &str) -> FixedBytes<32> {
+    keccak256(contract_name.as_bytes())
+}
+
+pub fn generate_random_salt() -> FixedBytes<32> {
+    let mut rng = rand::rng();
+    let mut salt_bytes = [0u8; 32];
+    rng.fill_bytes(&mut salt_bytes);
+    FixedBytes::new(salt_bytes)
 }
