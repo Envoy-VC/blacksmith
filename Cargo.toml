@@ -1,9 +1,9 @@
 [workspace]
 members = [
-  "crates/uniswap-deployer",
+  "crates/contract-deployer",
   "crates/common"
 ]
-default-members = ["crates/uniswap-deployer"]
+default-members = ["crates/contract-deployer"]
 resolver = "2"
 
 [workspace.package]

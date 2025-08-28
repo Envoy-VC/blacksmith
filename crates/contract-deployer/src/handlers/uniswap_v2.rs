@@ -11,21 +11,21 @@ sol!(
     #[allow(missing_docs)]
     #[sol(rpc)]
     UniswapV2Factory,
-    "src/artifacts/v2/UniswapV2Factory.json"
+    "src/artifacts/uniswap-v2/UniswapV2Factory.json"
 );
 
 sol!(
     #[allow(missing_docs)]
     #[sol(rpc)]
     WETH9,
-    "src/artifacts/v2/WETH9.json"z
+    "src/artifacts/uniswap-v2/WETH9.json"
 );
 
 sol!(
     #[allow(missing_docs)]
     #[sol(rpc)]
     UniswapV2RouterV2,
-    "src/artifacts/v2/UniswapV2RouterV2.json"
+    "src/artifacts/uniswap-v2/UniswapV2RouterV2.json"
 );
 
 pub struct UniswapV2Result {

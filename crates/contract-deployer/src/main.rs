@@ -1,7 +1,7 @@
 use alloy::{providers::ProviderBuilder, signers::local::PrivateKeySigner};
 use anyhow::{Context, Result};
 
-use crate::handlers::v2::deploy_uniswap_v2;
+use crate::handlers::uniswap_v2::deploy_uniswap_v2;
 
 use common::{
     config::Config,
