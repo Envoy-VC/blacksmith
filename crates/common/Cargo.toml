@@ -1,5 +1,5 @@
 [package]
-name = "uniswap_deployer"
+name = "common"
 version = "0.1.0"
 edition.workspace = true
 license.workspace = true
@@ -12,8 +12,6 @@ tokio = { workspace = true }
 dotenvy = { workspace = true }
 anyhow = { workspace = true }
 thiserror = { workspace = true }
-common = { path = "../common" }
-rand = "0.9"
 
 [lints]
 workspace = true

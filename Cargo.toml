@@ -1,6 +1,7 @@
 [workspace]
 members = [
   "crates/uniswap-deployer",
+  "crates/common"
 ]
 default-members = ["crates/uniswap-deployer"]
 resolver = "2"
