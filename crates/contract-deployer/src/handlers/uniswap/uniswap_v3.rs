@@ -38,13 +38,6 @@ sol!(
     "../artifacts/uniswap-v3/NFTDescriptor.json"
 );
 
-sol!(
-    #[allow(missing_docs)]
-    #[sol(rpc)]
-    WETH9,
-    "../artifacts/uniswap-v3/WETH9.json"
-);
-
 #[derive(Deserialize)]
 struct Artifact {
     bytecode: String,
