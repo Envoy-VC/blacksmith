@@ -9,11 +9,22 @@ sol!(
     "../artifacts/uniswap-v4/PoolManager.json"
 );
 
+sol!(
+    #[allow(missing_docs)]
+    #[sol(rpc)]
+    PositionDescriptor,
+    "../artifacts/uniswap-v4/PositionDescriptor.json"
+);
+
 pub struct UniswapV4Result {
     pub pool_manager_address: Address,
+    pub position_descriptor_address: Address,
 }
 
-pub async fn deploy_uniswap_v4(state: SharedState) -> Result<UniswapV4Result> {
+pub async fn deploy_uniswap_v4(
+    state: SharedState,
+    weth_address: Address,
+) -> Result<UniswapV4Result> {
     let provider = &state.provider;
     let deployer_address = provider.default_signer_address();
 
@@ -29,7 +40,21 @@ pub async fn deploy_uniswap_v4(state: SharedState) -> Result<UniswapV4Result> {
     .await
     .context("Failed to deploy PoolManager")?;
 
+    // 2. Deploy PositionDescriptor
+    let position_descriptor_salt = get_salt("PositionDescriptor");
+    let mut position_descriptor_init_code = PositionDescriptor::BYTECODE.clone().to_vec();
+    let position_descriptor_args = (pool_manager_address, weth_address, "ETH").abi_encode();
+    position_descriptor_init_code.extend(position_descriptor_args);
+    let position_descriptor_address = create2_deploy(
+        state.clone(),
+        position_descriptor_init_code.into(),
+        position_descriptor_salt,
+    )
+    .await
+    .context("Failed to deploy PositionDescriptor")?;
+
     Ok(UniswapV4Result {
         pool_manager_address,
+        position_descriptor_address,
     })
 }
