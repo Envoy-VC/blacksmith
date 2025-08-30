@@ -35,17 +35,13 @@ async fn main() -> Result<()> {
         .await
         .context("Failed to deploy Uniswap V2")?;
 
+    println!("Uniswap V2 Factory: {:?}", uniswap_v2.factory_address);
+    println!("Uniswap V2 Router: {:?}", uniswap_v2.router_address);
+    println!("WETH: {:?}\n", uniswap_v2.weth_address);
+
     let uniswap_v3 = deploy_uniswap_v3(shared_state.clone(), uniswap_v2.weth_address)
         .await
         .context("Failed to deploy Uniswap V3")?;
-
-    let uniswap_v4 = deploy_uniswap_v4(shared_state.clone(), uniswap_v2.weth_address)
-        .await
-        .context("Failed to deploy Uniswap V4")?;
-
-    println!("Uniswap V2 Factory: {:?}", uniswap_v2.factory_address);
-    println!("Uniswap V2 Router: {:?}", uniswap_v2.router_address);
-    println!("Uniswap V2 WETH: {:?}\n", uniswap_v2.weth_address);
 
     println!("Uniswap V3 Factory: {:?}", uniswap_v3.factory_address);
     println!(
@@ -65,7 +61,11 @@ async fn main() -> Result<()> {
         uniswap_v3.position_manager_address
     );
 
-    println!("Uniswap V4 Permit2: {:?}", uniswap_v4.permit2_address);
+    let uniswap_v4 = deploy_uniswap_v4(shared_state.clone(), uniswap_v2.weth_address)
+        .await
+        .context("Failed to deploy Uniswap V4")?;
+
+    println!("Permit2: {:?}", uniswap_v4.permit2_address);
     println!(
         "Uniswap V4 Pool Manager: {:?}",
         uniswap_v4.pool_manager_address

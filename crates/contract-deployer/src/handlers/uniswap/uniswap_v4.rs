@@ -93,12 +93,12 @@ pub async fn deploy_uniswap_v4(
     .context("Failed to deploy PositionDescriptor")?;
 
     // 3. Deploy PositionManager
-    // PositionManager::deploy(provider, poolManager, permit2, unsubscribeGasLimit, tokenDescriptor, weth9)
+    const DEFAULT_UNSUBSCRIBE_GAS_LIMIT: u64 = 100_000;
     let position_manager_salt = get_salt("PositionManager");
     let position_manager_args = (
         pool_manager_address,
         permit2_address,
-        100_000,
+        DEFAULT_UNSUBSCRIBE_GAS_LIMIT,
         position_descriptor_address,
         weth_address,
     )
