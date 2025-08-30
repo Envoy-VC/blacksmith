@@ -31,7 +31,7 @@ pub async fn create2_deploy(
     let existing_code = provider
         .get_code_at(computed_address)
         .await
-        .context("Failed to fetch code")?;
+        .context(format!("Failed to fetch code at {}", computed_address))?;
     if !existing_code.is_empty() {
         return Ok(computed_address);
     }
@@ -60,10 +60,10 @@ pub async fn create2_deploy(
     let code = provider
         .get_code_at(computed_address)
         .await
-        .context("Failed to fetch code at {computed_address}")?;
+        .context(format!("Failed to fetch code at {}", computed_address))?;
 
     if code.is_empty() {
-        return Err(anyhow::anyhow!("Empty Code fount at {computed_address}"));
+        return Err(anyhow::anyhow!("Empty code found at {}", computed_address));
     }
 
     Ok(computed_address)
