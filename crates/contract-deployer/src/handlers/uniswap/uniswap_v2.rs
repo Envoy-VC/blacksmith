@@ -32,7 +32,6 @@ pub struct UniswapV2Result {
 pub async fn deploy_uniswap_v2(state: SharedState) -> Result<UniswapV2Result> {
     let provider = &state.provider;
     let deployer_address = provider.default_signer_address();
-    println!("Deployer address: {:?}", deployer_address);
 
     // 1. Deploy WETH9
     let weth_init_code = WETH9::BYTECODE.clone();

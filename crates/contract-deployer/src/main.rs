@@ -1,7 +1,7 @@
 use alloy::{providers::ProviderBuilder, signers::local::PrivateKeySigner};
 use anyhow::{Context, Result};
 
-use crate::handlers::uniswap::{deploy_uniswap_v2, deploy_uniswap_v3};
+use crate::handlers::uniswap::{deploy_uniswap_v2, deploy_uniswap_v3, deploy_uniswap_v4};
 
 use common::{
     config::Config,
@@ -35,14 +35,13 @@ async fn main() -> Result<()> {
         .await
         .context("Failed to deploy Uniswap V2")?;
 
+    println!("Uniswap V2 Factory: {:?}", uniswap_v2.factory_address);
+    println!("Uniswap V2 Router: {:?}", uniswap_v2.router_address);
+    println!("WETH: {:?}\n", uniswap_v2.weth_address);
+
     let uniswap_v3 = deploy_uniswap_v3(shared_state.clone(), uniswap_v2.weth_address)
         .await
         .context("Failed to deploy Uniswap V3")?;
-
-    println!("Uniswap V2 Factory: {:?}", uniswap_v2.factory_address);
-    println!("Uniswap V2 Router: {:?}", uniswap_v2.router_address);
-    println!("Uniswap V2 WETH: {:?}", uniswap_v2.weth_address);
-    println!("\n\n");
 
     println!("Uniswap V3 Factory: {:?}", uniswap_v3.factory_address);
     println!(
@@ -58,8 +57,29 @@ async fn main() -> Result<()> {
         uniswap_v3.position_descriptor_address
     );
     println!(
-        "Uniswap V3 Position Manager: {:?}",
+        "Uniswap V3 Position Manager: {:?}\n",
         uniswap_v3.position_manager_address
     );
+
+    let uniswap_v4 = deploy_uniswap_v4(shared_state.clone(), uniswap_v2.weth_address)
+        .await
+        .context("Failed to deploy Uniswap V4")?;
+
+    println!("Permit2: {:?}", uniswap_v4.permit2_address);
+    println!(
+        "Uniswap V4 Pool Manager: {:?}",
+        uniswap_v4.pool_manager_address
+    );
+    println!(
+        "Uniswap V4 Position Descriptor: {:?}",
+        uniswap_v4.position_descriptor_address
+    );
+    println!(
+        "Uniswap V4 Position Manager: {:?}",
+        uniswap_v4.position_manager_address
+    );
+    println!("Uniswap V4 Quoter: {:?}", uniswap_v4.quoter_address);
+    println!("Uniswap V4 State View: {:?}", uniswap_v4.state_view_address);
+
     Ok(())
 }

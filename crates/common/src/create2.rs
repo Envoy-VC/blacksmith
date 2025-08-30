@@ -27,6 +27,15 @@ pub async fn create2_deploy(
     let deterministic_deployer = address!("0x4e59b44847b379578588920cA78FbF26c0B4956C");
     let computed_address = compute_create2_address(deterministic_deployer, init_code.clone(), salt);
 
+    // Maintain Idempotency
+    let existing_code = provider
+        .get_code_at(computed_address)
+        .await
+        .context(format!("Failed to fetch code at {}", computed_address))?;
+    if !existing_code.is_empty() {
+        return Ok(computed_address);
+    }
+
     let calldata = [salt.as_slice(), init_code.as_ref()].concat();
 
     let request = TransactionRequest::default()
@@ -51,10 +60,10 @@ pub async fn create2_deploy(
     let code = provider
         .get_code_at(computed_address)
         .await
-        .context("Failed to fetch code at {computed_address}")?;
+        .context(format!("Failed to fetch code at {}", computed_address))?;
 
     if code.is_empty() {
-        return Err(anyhow::anyhow!("Empty Code fount at {computed_address}"));
+        return Err(anyhow::anyhow!("Empty code found at {}", computed_address));
     }
 
     Ok(computed_address)
